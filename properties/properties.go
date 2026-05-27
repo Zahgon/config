@@ -2,7 +2,6 @@
 Package properties is a driver use Java properties format content as config source
 
 Usage please see readme.
-
 */
 package properties
 

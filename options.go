@@ -1,11 +1,8 @@
 package config
 
 import (
-	"strings"
-
 	"dario.cat/mergo"
 	"github.com/go-viper/mapstructure/v2"
-	"github.com/gookit/goutil"
 )
 
 // there are some event names for config data changed.
@@ -69,156 +66,104 @@ type Options struct {
 // OptionFn option func
 type OptionFn func(*Options)
 
-func newDefaultOption() *Options {
-	return &Options{
-		ParseKey:  true,
-		TagName:   defaultStructTag,
-		Delimiter: defaultDelimiter,
-		// for export
-		DumpFormat: JSON,
-		ReadFormat: JSON,
-		// struct decoder config
-		DecoderConfig: newDefaultDecoderConfig(""),
-		MergeOptions: []func(*mergo.Config){
-			mergo.WithOverride,
-			mergo.WithTypeCheck,
-		},
-	}
-}
+func newDefaultOption() *Options { _ = "STUB: not implemented"; return nil }
+
+// for export
+
+// struct decoder config
 
 func newDefaultDecoderConfig(tagName string) *mapstructure.DecoderConfig {
-	if tagName == "" {
-		tagName = defaultStructTag
-	}
-
-	return &mapstructure.DecoderConfig{
-		// tag name for binding struct
-		TagName: tagName,
-		// will auto convert string to int/uint
-		WeaklyTypedInput: true,
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// tag name for binding struct
+
+// will auto convert string to int/uint
 
 // SetTagName for mapping data to struct
-func (o *Options) SetTagName(tagName string) {
-	o.TagName = tagName
-	o.DecoderConfig.TagName = tagName
-}
+func (o *Options) SetTagName(tagName string) { _ = "STUB: not implemented"; return }
 
-func (o *Options) shouldAddHookFunc() bool {
-	return o.ParseTime || o.ParseEnv
-}
+func (o *Options) shouldAddHookFunc() bool { _ = "STUB: not implemented"; return false }
 
 func (o *Options) makeDecoderConfig() *mapstructure.DecoderConfig {
-	var bindConf *mapstructure.DecoderConfig
-	if o.DecoderConfig == nil {
-		bindConf = newDefaultDecoderConfig(o.TagName)
-	} else {
-		// copy new config for each binding.
-		copyConf := *o.DecoderConfig
-		bindConf = &copyConf
-
-		// compatible with previous settings opts.TagName
-		if bindConf.TagName == "" {
-			bindConf.TagName = o.TagName
-		}
-	}
-
-	// add hook on decode value to struct
-	if bindConf.DecodeHook == nil && o.shouldAddHookFunc() {
-		bindConf.DecodeHook = ValDecodeHookFunc(o.ParseEnv, o.ParseTime)
-	}
-
-	return bindConf
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// copy new config for each binding.
+
+// compatible with previous settings opts.TagName
+
+// add hook on decode value to struct
 
 /*************************************************************
  * config setting
  *************************************************************/
 
 // WithTagName set tag name for export to struct
-func WithTagName(tagName string) func(*Options) {
-	return func(opts *Options) {
-		opts.SetTagName(tagName)
-	}
-}
+func WithTagName(tagName string) func(*Options) { _ = "STUB: not implemented"; return nil }
 
 // ParseEnv set parse env value
-func ParseEnv(opts *Options) { opts.ParseEnv = true }
+func ParseEnv(opts *Options) { _ = "STUB: not implemented"; return }
 
 // ParseTime set parse time string.
-func ParseTime(opts *Options) { opts.ParseTime = true }
+func ParseTime(opts *Options) { _ = "STUB: not implemented"; return }
 
 // ParseDefault tag value on binding data to struct.
-func ParseDefault(opts *Options) { opts.ParseDefault = true }
+func ParseDefault(opts *Options) { _ = "STUB: not implemented"; return }
 
 // Readonly set readonly
-func Readonly(opts *Options) { opts.Readonly = true }
+func Readonly(opts *Options) { _ = "STUB: not implemented"; return }
 
 // Delimiter set delimiter char
-func Delimiter(sep byte) func(*Options) {
-	return func(opts *Options) {
-		opts.Delimiter = sep
-	}
-}
+func Delimiter(sep byte) func(*Options) { _ = "STUB: not implemented"; return nil }
 
 // SaveFileOnSet set hook func, will panic on save error
 func SaveFileOnSet(fileName string, format string) func(options *Options) {
-	return func(opts *Options) {
-		opts.HookFunc = func(event string, c *Config) {
-			if strings.HasPrefix(event, "set.") {
-				goutil.PanicErr(c.DumpToFile(fileName, format))
-			}
-		}
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithHookFunc set hook func
-func WithHookFunc(fn HookFunc) func(*Options) {
-	return func(opts *Options) {
-		opts.HookFunc = fn
-	}
-}
+func WithHookFunc(fn HookFunc) func(*Options) { _ = "STUB: not implemented"; return nil }
 
 // EnableCache set readonly
-func EnableCache(opts *Options) { opts.EnableCache = true }
+func EnableCache(opts *Options) { _ = "STUB: not implemented"; return }
 
 // WithOptions with options
-func WithOptions(opts ...OptionFn) { dc.WithOptions(opts...) }
+func WithOptions(opts ...OptionFn) { _ = "STUB: not implemented"; return }
 
 // WithOptions apply some options
-func (c *Config) WithOptions(opts ...OptionFn) *Config {
-	if !c.IsEmpty() {
-		panic("config: Cannot set options after data has been loaded")
-	}
+func (c *Config) WithOptions(opts ...OptionFn) *Config { _ = "STUB: not implemented"; return nil }
 
-	// apply options
-	for _, opt := range opts {
-		opt(c.opts)
-	}
-	return c
-}
+// apply options
 
 // GetOptions get options
-func GetOptions() *Options { return dc.Options() }
+func GetOptions() *Options {
+	_ = "STUB: not implemented"
 
-// Options get
+	// Options get
+	return nil
+}
+
 func (c *Config) Options() *Options {
-	return c.opts
+	_ = "STUB: not implemented"
+
+	// With apply some options
+	return nil
 }
 
-// With apply some options
 func (c *Config) With(fn func(c *Config)) *Config {
-	fn(c)
-	return c
+	_ = "STUB: not implemented"
+
+	// Readonly disable set data to config.
+	//
+	// Usage:
+	//
+	//	config.LoadFiles(a, b, c)
+	//	config.Readonly()
+	return nil
 }
 
-// Readonly disable set data to config.
-//
-// Usage:
-//
-//	config.LoadFiles(a, b, c)
-//	config.Readonly()
-func (c *Config) Readonly() {
-	c.opts.Readonly = true
-}
+func (c *Config) Readonly() { _ = "STUB: not implemented"; return }

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/fsnotify/fsnotify"
 	"github.com/gookit/config/v2"
 	"github.com/gookit/config/v2/yaml"
 	"github.com/gookit/goutil"
@@ -40,59 +39,16 @@ func main() {
 	<-done
 }
 
-func watchConfigFiles(cfg *config.Config) error {
-	watcher, err := fsnotify.NewWatcher()
-	if err != nil {
-		return err
-	}
-	//noinspection GoUnhandledErrorResult
-	defer watcher.Close()
+func watchConfigFiles(cfg *config.Config) error { _ = "STUB: not implemented"; return nil }
 
-	// get loaded files
-	files := cfg.LoadedFiles()
-	if len(files) == 0 {
-		return nil
-	}
+//noinspection GoUnhandledErrorResult
 
-	go func() {
-		for {
-			select {
-			case event, ok := <-watcher.Events:
-				if !ok { // 'Events' channel is closed
-					cliutil.Infoln("'Events' channel is closed ...", event)
-					return
-				}
+// get loaded files
 
-				// if event.Op > 0 {
-				cliutil.Infof("file event: %s\n", event)
+// 'Events' channel is closed
 
-				if event.Op&fsnotify.Write == fsnotify.Write {
-					cliutil.Infof("modified file: %s\n", event.Name)
+// if event.Op > 0 {
 
-					err := cfg.ReloadFiles()
-					if err != nil {
-						cliutil.Errorf("reload config error: %s\n", err.Error())
-					}
-				}
-				// }
+// }
 
-			case err, ok := <-watcher.Errors:
-				if ok { // 'Errors' channel is not closed
-					cliutil.Errorf("watch file error: %s\n", err.Error())
-				}
-				if err != nil {
-					cliutil.Errorf("watch file error2: %s\n", err.Error())
-				}
-				return
-			}
-		}
-	}()
-
-	for _, path := range files {
-		cliutil.Infof("add watch file: %s\n", path)
-		if err := watcher.Add(path); err != nil {
-			return err
-		}
-	}
-	return nil
-}
+// 'Errors' channel is not closed

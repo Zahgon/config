@@ -1,11 +1,5 @@
 package config
 
-import (
-	"encoding/json"
-
-	"github.com/gookit/goutil/jsonutil"
-)
-
 // Driver interface.
 // TODO refactor: rename GetDecoder() to Decode(), rename GetEncoder() to Encode()
 type Driver interface {
@@ -39,52 +33,59 @@ type StdDriver struct {
 
 // NewDriver new std driver instance.
 func NewDriver(name string, dec Decoder, enc Encoder) *StdDriver {
-	return &StdDriver{name: name, decoder: dec, encoder: enc}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithAliases set aliases for driver
 func (d *StdDriver) WithAliases(aliases ...string) *StdDriver {
-	d.aliases = aliases
-	return d
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // WithAlias add alias for driver
-func (d *StdDriver) WithAlias(alias string) *StdDriver {
-	d.aliases = append(d.aliases, alias)
-	return d
-}
+func (d *StdDriver) WithAlias(alias string) *StdDriver { _ = "STUB: not implemented"; return nil }
 
 // Name of driver
-func (d *StdDriver) Name() string { return d.name }
+func (d *StdDriver) Name() string {
+	_ = "STUB: not implemented"
 
-// Aliases format name of driver
+	// Aliases format name of driver
+	return ""
+}
+
 func (d *StdDriver) Aliases() []string {
-	return d.aliases
+	_ = "STUB: not implemented"
+
+	// Decode of driver
+	return nil
 }
 
-// Decode of driver
-func (d *StdDriver) Decode(blob []byte, v any) (err error) {
-	return d.decoder(blob, v)
-}
+func (d *StdDriver) Decode(blob []byte, v any) (err error) { _ = "STUB: not implemented"; return nil }
 
 // Encode of driver
 func (d *StdDriver) Encode(v any) ([]byte, error) {
-	return d.encoder(v)
+	_ = "STUB: not implemented"
+	return nil,
+
+		// GetDecoder of driver
+		nil
 }
 
-// GetDecoder of driver
 func (d *StdDriver) GetDecoder() Decoder {
-	return d.decoder
+	_ = "STUB: not implemented"
+
+	// GetEncoder of driver
+	return *new(Decoder)
 }
 
-// GetEncoder of driver
 func (d *StdDriver) GetEncoder() Encoder {
-	return d.encoder
-}
+	_ = "STUB: not implemented"
 
-/*************************************************************
- * JSON driver
- *************************************************************/
+	/*************************************************************
+	 * JSON driver
+	 *************************************************************/return *new(Encoder)
+}
 
 var (
 	// JSONAllowComments support write comments on json file.
@@ -125,38 +126,30 @@ type jsonDriver struct {
 }
 
 // Name of the driver
-func (d *jsonDriver) Name() string {
-	return d.driverName
-}
+func (d *jsonDriver) Name() string { _ = "STUB: not implemented"; return "" }
 
 // Aliases of the driver
 func (d *jsonDriver) Aliases() []string {
+	_ = "STUB: not implemented"
+
+	// Decode for the driver
 	return nil
 }
 
-// Decode for the driver
-func (d *jsonDriver) Decode(data []byte, v any) error {
-	if d.ClearComments {
-		str := jsonutil.StripComments(string(data))
-		return json.Unmarshal([]byte(str), v)
-	}
-	return json.Unmarshal(data, v)
-}
+func (d *jsonDriver) Decode(data []byte, v any) error { _ = "STUB: not implemented"; return nil }
 
 // GetDecoder for the driver
 func (d *jsonDriver) GetDecoder() Decoder {
-	return d.Decode
+	_ = "STUB: not implemented"
+
+	// Encode for the driver
+	return *new(Decoder)
 }
 
-// Encode for the driver
 func (d *jsonDriver) Encode(v any) (out []byte, err error) {
-	if len(d.MarshalIndent) > 0 {
-		return json.MarshalIndent(v, "", d.MarshalIndent)
-	}
-	return json.Marshal(v)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetEncoder for the driver
-func (d *jsonDriver) GetEncoder() Encoder {
-	return d.Encode
-}
+func (d *jsonDriver) GetEncoder() Encoder { _ = "STUB: not implemented"; return *new(Encoder) }
